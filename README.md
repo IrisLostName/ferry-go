@@ -6,7 +6,7 @@
 
 文档: [https://www.fdevops.com/docs/ferry](https://www.fdevops.com/docs/ferry-tutorial-document/introduction)
 
-# 食用方法：
+# 开发：
 ```aiexclude
 git clone https://github.com/lanyulei/ferry.git
 cd ferry
@@ -21,6 +21,29 @@ go run main.go server -c config/settings.dev.yml #启动
 
 ```
 
+## 部署编译：
+```aiexclude
+cd ferry 
+env GOOS=linux GOARCH=amd64 go build   #更多交叉编译内容，请访问 https://fdevops.com/2020/03/08/go-locale-configuration
+
+## 修改 config/settings.yml
+
+mkdir -p log static/uploadfile static/scripts static/template
+
+将本地项目下 static/template 目录下的所有文件上传的到，服务器对应的项目目录下 static/template
+
+<SQL> create database ferry charset 'utf8mb4';
+
+./ferry init -c config/settings.yml
+
+nohup ./ferry server -c=config/settings.yml > /dev/null 2>&1 & 
+```
+## git老提交不上：
+```
+git add .
+git commit -m "记录"
+git push origin main
+```
 ## License
 
 [MIT](https://github.com/lanyulei/ferry/blob/master/LICENSE)
